@@ -1,0 +1,54 @@
+# Shared Quarto configuration for every deck in this folder.
+#
+# One deck = one subfolder holding a `slides.qmd`. Each deck renders IN PLACE to
+# `<deck>/index.html`, which is what makes the folder a valid GitHub Pages root
+# (`/<deck>/` serves that deck). Do NOT set `output-dir` — it would collapse the
+# per-deck folders and break the published URLs.
+#
+# Every revealjs option lives here, so a deck's own YAML only carries its title,
+# byline, and 3-number key-result strip.
+
+project:
+  type: default
+  render:
+    - "*/slides.qmd"
+
+format:
+  revealjs:
+    # NOTE: `output-file: index.html` deliberately does NOT live here — it must be set in
+    # each deck's own slides.qmd. Quarto rewrites project-level metadata paths to be
+    # relative to the input file whenever the named file exists at the project root, so
+    # once this folder gained its landing page `index.html`, an `output-file: index.html`
+    # here became `../index.html` and every render died with
+    #   "Invalid value for `output-file`: paths are not allowed".
+    # Per-deck front matter is not rewritten, so it is the safe place for it.
+
+    # Shared brand: ONE copy of the theme and the title-slide partial for all decks.
+    # Paths are relative to this file (the project root, i.e. `slides/`).
+    theme: [default, site-brand.scss]
+    template-partials:
+      - title-slide.html
+
+    # Presenter features (all bundled by Quarto — no CDN).
+    center: true
+    slide-number: c/t
+    menu: true
+    chalkboard: true
+    preview-links: auto
+    overview: true
+    progress: true
+    history: true
+    transition: fade
+
+    # Canvas + figures.
+    width: 1280
+    height: 720
+    fig-align: center
+    auto-stretch: true
+    highlight-style: github
+    link-external-icon: false
+
+    # NEVER set `embed-resources: true` — it is incompatible with the chalkboard
+    # plugin. Portability comes from keeping every asset inside `slides/` instead.
+    # NEVER set `html-math-method: katex` — it is broken under revealjs; the
+    # default MathJax is required for `$...$` to typeset.

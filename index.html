@@ -1,944 +1,176 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<script src="slides_files/libs/clipboard/clipboard.min.js"></script>
-<script src="slides_files/libs/quarto-html/tabby.min.js"></script>
-<script src="slides_files/libs/quarto-html/popper.min.js"></script>
-<script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<!--
+  Landing page for the deck collection. Hand-written on purpose: no Quarto render
+  step, no build, no CDN — edit and it is live. To add a deck, copy one
+  <article class="deck"> block and change its fields. Colors mirror site-brand.scss.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slides — Environmental Kuznets Curve for Chinese Provinces</title>
+<meta name="description" content="Seminar slide decks from the project replicating and extending the Environmental Kuznets Curve for Chinese provinces, 2004–2020.">
+<style>
+  :root {
+    --ink:      #141413;
+    --muted:    #5a5f66;
+    --title:    #2874A6;  /* project title blue */
+    --green:    #229954;  /* project bold green */
+    --orange:   #D55E00;  /* Okabe accent — rules, numbers */
+    --blue:     #0072B2;  /* Okabe blue — links */
+    --rule:     #e3e6ea;
+    --card:     #ffffff;
+    --canvas:   #fafbfc;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+  }
+  .wrap { max-width: 54rem; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
 
-  <meta name="dcterms.date" content="2026-07-30">
-  <title>Does the inverted-N EKC survive inside one country?</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reveal.css">
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-      vertical-align: middle;
-    }
-  </style>
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto-04cb10324407815b77c685a673f49383.css">
-  <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
-    .reveal div.sourceCode {
-      margin: 0;
-      overflow: auto;
-    }
-    .reveal div.hanging-indent {
-      margin-left: 1em;
-      text-indent: -1em;
-    }
-    .reveal .slide:not(.center) {
-      height: 100%;
-    }
-    .reveal .slide.scrollable {
-      overflow-y: auto;
-    }
-    .reveal .footnotes {
-      height: 100%;
-      overflow-y: auto;
-    }
-    .reveal .slide .absolute {
-      position: absolute;
-      display: block;
-    }
-    .reveal .footnotes ol {
-      counter-reset: ol;
-      list-style-type: none; 
-      margin-left: 0;
-    }
-    .reveal .footnotes ol li:before {
-      counter-increment: ol;
-      content: counter(ol) ". "; 
-    }
-    .reveal .footnotes ol li > p:first-child {
-      display: inline-block;
-    }
-    .reveal .slide ul,
-    .reveal .slide ol {
-      margin-bottom: 0.5em;
-    }
-    .reveal .slide ul li,
-    .reveal .slide ol li {
-      margin-top: 0.4em;
-      margin-bottom: 0.2em;
-    }
-    .reveal .slide ul[role="tablist"] li {
-      margin-bottom: 0;
-    }
-    .reveal .slide ul li > *:first-child,
-    .reveal .slide ol li > *:first-child {
-      margin-block-start: 0;
-    }
-    .reveal .slide ul li > *:last-child,
-    .reveal .slide ol li > *:last-child {
-      margin-block-end: 0;
-    }
-    .reveal .slide .columns:nth-child(3) {
-      margin-block-start: 0.8em;
-    }
-    .reveal blockquote {
-      box-shadow: none;
-    }
-    .reveal .tippy-content>* {
-      margin-top: 0.2em;
-      margin-bottom: 0.7em;
-    }
-    .reveal .tippy-content>*:last-child {
-      margin-bottom: 0.2em;
-    }
-    .reveal .slide > img.stretch.quarto-figure-center,
-    .reveal .slide > img.r-stretch.quarto-figure-center {
-      display: block;
-      margin-left: auto;
-      margin-right: auto; 
-    }
-    .reveal .slide > img.stretch.quarto-figure-left,
-    .reveal .slide > img.r-stretch.quarto-figure-left  {
-      display: block;
-      margin-left: 0;
-      margin-right: auto; 
-    }
-    .reveal .slide > img.stretch.quarto-figure-right,
-    .reveal .slide > img.r-stretch.quarto-figure-right  {
-      display: block;
-      margin-left: auto;
-      margin-right: 0; 
-    }
-  </style>
+  /* ---- masthead ---- */
+  header .eyebrow {
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 .6rem;
+  }
+  header h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.7rem, 4.2vw, 2.5rem);
+    line-height: 1.2; font-weight: 600; color: var(--title);
+    margin: 0 0 .9rem;
+  }
+  header h1::after {
+    content: ""; display: block; width: 3.5rem; height: 3px;
+    background: var(--orange); margin-top: .9rem; border-radius: 2px;
+  }
+  header p.lede { color: var(--muted); margin: 0; max-width: 42rem; }
+
+  h2.section {
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600;
+    margin: 3.2rem 0 1rem; padding-bottom: .5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---- deck card ---- */
+  .deck {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--orange);
+    border-radius: 6px;
+    padding: 1.5rem 1.6rem;
+    margin: 0 0 1.1rem;
+  }
+  .deck h3 { margin: 0 0 .4rem; font-size: 1.22rem; line-height: 1.3; font-weight: 600; }
+  .deck h3 a { color: var(--title); text-decoration: none; }
+  .deck h3 a:hover { text-decoration: underline; }
+  .deck p.sub { margin: 0 0 1.1rem; color: var(--muted); font-size: .94rem; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 1.6rem; margin: 0 0 1.2rem; }
+  .stat .num {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.4rem; line-height: 1.1; color: var(--orange);
+  }
+  .stat .cap {
+    font-size: .74rem; color: var(--muted); text-transform: uppercase;
+    letter-spacing: .06em; margin-top: .25rem; max-width: 12rem;
+  }
+
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .7rem; }
+  .tag {
+    font-size: .74rem; color: var(--muted);
+    border: 1px solid var(--rule); border-radius: 999px; padding: .18rem .6rem;
+  }
+  a.open {
+    margin-left: auto; font-size: .9rem; font-weight: 600;
+    color: var(--blue); text-decoration: none; white-space: nowrap;
+  }
+  a.open:hover { text-decoration: underline; }
+
+  /* ---- footer ---- */
+  footer {
+    margin-top: 3.4rem; padding-top: 1.2rem; border-top: 1px solid var(--rule);
+    color: var(--muted); font-size: .86rem;
+  }
+  footer a { color: var(--blue); }
+  footer code {
+    font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: .85em;
+    background: #f1f3f5; padding: .1rem .35rem; border-radius: 3px;
+  }
+  footer .keys strong { color: var(--green); font-weight: 600; }
+
+  @media (max-width: 34rem) {
+    .wrap { padding-top: 2.5rem; }
+    a.open { margin-left: 0; }
+  }
+</style>
 </head>
-<body class="quarto-light">
-  <div class="reveal">
-    <div class="slides">
+<body>
+<div class="wrap">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Does the inverted-N EKC survive inside one country?</h1>
-  <p class="subtitle">Chinese provincial PM2.5, 2004–2020 — a BMA · Double-Selection LASSO · Double-ML triangulation</p>
-  <div class="title-result-strip">
-    <div class="kr"><span class="kr-num">−0.016</span><span class="kr-cap">cubic discriminant · no inverted-N</span></div>
-    <div class="kr"><span class="kr-num">0</span><span class="kr-cap">inverted-N signatures (RF dose-response)</span></div>
-    <div class="kr"><span class="kr-num">527</span><span class="kr-cap">province-years · 31 × 17</span></div>
-  </div>
-  <p class="author"><a href="https://carlos-mendez.org">Carlos Mendez</a></p>
-  <p class="institute">Nagoya University (GSID)</p>
-  <p class="date">July 30, 2026</p>
-</section>
-<section>
-<section id="the-shape-is-the-question" class="title-slide slide level1 divider center" data-background-color="#2874A6">
-<h1>The shape is the question</h1>
-<p><span class="act">Act I</span></p>
-</section>
-<section id="across-84-countries-the-ekc-bends-twice-an-inverted-n" class="slide level2 center">
-<h2>Across 84 countries, the EKC bends twice — an inverted-N</h2>
-<p>Gravina &amp; Lanzafame (2025) re-estimate the Environmental Kuznets Curve with <strong>Bayesian Model Averaging</strong> and <strong>Double-Selection LASSO</strong>, and find a robust <strong>inverted-N</strong> for CO₂: pollution rises, falls, then rises again — turning points near <strong>$1,273</strong> and <strong>$41,509</strong>.</p>
-<div class="fragment">
-<p>The question for this project: does that two-hump shape reappear when the variation is <em>31 provinces of one country</em> — Chinese PM2.5 — instead of 84 economies?</p>
-<p><span class="takeaway fragment">Same machinery, new setting: we ask whether China’s PM2.5–income curve bends, or only falls.</span></p>
-<aside class="notes">
-<p>The paper’s headline is a cubic that bends twice. All three GDP terms have posterior inclusion probability 1.00. We port their exact BMA + DSL pipeline to a Chinese provincial panel and add a tree-based Double-ML robustness check. The whole talk reduces to the sign of one number.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</div>
-</section>
-<section id="one-number-decides-the-shape-the-cubic-discriminant" class="slide level2 center">
-<h2>One number decides the shape: the cubic discriminant</h2>
-<p><span class="math display">\[D = \beta_2^2 - 3\,\beta_1\beta_3\]</span></p>
-<p>where <span class="math inline">\(\beta_1,\beta_2,\beta_3\)</span> are the linear, quadratic, and cubic GDP coefficients.</p>
-<p><span class="comment"><span class="math inline">\(D &lt; 0\)</span> → the slope never reaches zero → a <strong>monotonic</strong> curve (no inverted-N). <span class="math inline">\(D &gt; 0\)</span> with turning points inside the data → the inverted-N / U signature.</span></p>
-<p><span class="takeaway fragment">Watch <span class="math inline">\(D\)</span>: every method in this talk is just a different way to estimate its sign.</span></p>
-<aside class="notes">
-<p>This is the schoolbook discriminant of the quadratic you get by setting the cubic’s derivative to zero. Negative discriminant means no real roots — no interior turning point.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="the-raw-cloud-already-leans-monotonic-no-visible-hump" class="slide level2 center">
-<h2>The raw cloud already leans monotonic — no visible hump</h2>
+  <header>
+    <p class="eyebrow">Nagoya University · GSID</p>
+    <h1>Replicating and Extending the Environmental Kuznets Curve for Chinese Provinces</h1>
+    <p class="lede">
+      Seminar decks from a project that ports the Gravina &amp; Lanzafame (2025) BMA +
+      Double-Selection LASSO pipeline to a panel of 31 Chinese provinces, 2004–2020,
+      and extends it with tree-based Double ML.
+    </p>
+  </header>
 
-<img data-src="../figures/c90-paper-overview/c00_figure1_pm25_gdp_scatter.png" class="r-stretch quarto-figure-center"><p class="caption">527 province-years; the linear, quadratic, and cubic OLS fits are all nearly flat — no rise-then-fall.</p><p><span class="takeaway fragment">Before any controls, the descriptive cubic barely bends — the eye sees decline, not a hump.</span></p>
-<aside class="notes">
-<p>This is unconditional — no controls, no fixed effects. GDP per capita spans 4,244 to 164,158 yuan (log 8.35 to 12.01). The rest of the talk tests whether this flatness sharpens into a robust monotonic decline under three inference paradigms.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="three-paradigms-one-discriminant" class="title-slide slide level1 divider center" data-background-color="#0072B2">
-<h1>Three paradigms, one discriminant</h1>
-<p><span class="act">Act II</span></p>
-</section>
-<section id="we-climb-a-ladder-of-assumptions" class="slide level2 center">
-<h2>We climb a ladder of assumptions</h2>
-<ul>
-<li class="fragment"><strong>Bayesian Model Averaging</strong> — average the cubic over ~9,000 candidate models.</li>
-<li class="fragment"><strong>Double-Selection LASSO</strong> — force the cubic in, let LASSO pick the controls, estimate frequentist.</li>
-<li class="fragment"><strong>Random-Forest Double ML</strong> — replace <em>linear</em> controls with nonparametric trees.</li>
-</ul>
-<p><span class="takeaway fragment">If <span class="math inline">\(D\)</span> stays negative as we weaken the assumptions at each rung, the shape is real — not an artifact of one machine.</span></p>
-<aside class="notes">
-<p>Triangulation: agreement across three very different paradigms is far stronger evidence than any single estimator. Each rung relaxes something the previous one assumed.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="bma-all-three-gdp-terms-are-decisive-pip-1.0" class="slide level2 center">
-<h2>BMA: all three GDP terms are decisive — PIP ≈ 1.0</h2>
+  <h2 class="section">Decks</h2>
 
-<img data-src="../figures/c90-paper-overview/c11_bma_main_pm25_pip.png" class="r-stretch quarto-figure-center"><p class="caption">Posterior inclusion probabilities; the three GDP polynomial terms (blue) sit at the top, PIP ≈ 1.</p><p><span class="takeaway fragment">The cubic is genuinely present — the model cannot drop the GDP terms as noise.</span></p>
-<aside class="notes">
-<p>Robust g-prior: GDP pc 0.96, pc² 0.98, pc³ 1.00; UIP prior ≥ 0.99. Eight covariates clear PIP &gt; 0.5 — led by water supply per capita (0.997) and design patents (0.991) — but none changes the GDP-shape verdict.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="the-fitted-bma-cubic-only-ever-descends-discriminant-0.016" class="slide level2 center">
-<h2>The fitted BMA cubic only ever descends — discriminant −0.016</h2>
-
-<img data-src="../figures/c90-paper-overview/c11_bma_main_pm25_ekc.png" class="r-stretch quarto-figure-center"><p class="caption">Conditional on province FE, year FE, a time trend, and 20 covariates, the partial cubic declines across the whole range.</p><p><span class="takeaway fragment">No inverted-N under BMA: richer provinces have lower conditional PM2.5, with no interior turning point.</span></p>
-<aside class="notes">
-<p>Discriminant −0.01633 (UIP), −0.01596 (Robust), sign pattern (−, +, −). The rug shows the data cover the whole GDP range, so there is no hidden turning point off-support.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="the-verdict-is-not-a-knife-edge-both-priors-same-negative-d" class="slide level2 center">
-<h2>The verdict is not a knife-edge — both priors, same negative D</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 13%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>BMA g-prior</th>
-<th style="text-align: right;"><span class="math inline">\(\beta_1\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(\beta_2\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(\beta_3\)</span></th>
-<th style="text-align: right;">Discriminant</th>
-<th>Shape</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>UIP (fixed)</td>
-<td style="text-align: right;">−8.50</td>
-<td style="text-align: right;">0.863</td>
-<td style="text-align: right;">−0.0298</td>
-<td style="text-align: right;"><span class="key">−0.0163</span></td>
-<td>monotonic</td>
-</tr>
-<tr class="even">
-<td>Robust (random)</td>
-<td style="text-align: right;">−8.24</td>
-<td style="text-align: right;">0.837</td>
-<td style="text-align: right;">−0.0290</td>
-<td style="text-align: right;"><span class="key">−0.0160</span></td>
-<td>monotonic</td>
-</tr>
-</tbody>
-</table>
-<p><span class="takeaway fragment">Two priors, the same (−, +, −) cubic and the same negative discriminant — the Bayesian result is stable.</span></p>
-<aside class="notes">
-<p>The two g-priors bracket the prior-sensitivity of the model space; both land on the same monotonic verdict. This is the Bayesian anchor the next two methods will triangulate against.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="a-bayesian-result-deserves-a-frequentist-witness" class="slide level2 center">
-<h2>A Bayesian result deserves a frequentist witness</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h3 id="bma">BMA</h3>
-<ul>
-<li>Averages the cubic over ~9,000 models</li>
-<li>Posterior inclusion probabilities</li>
-<li>Bayesian g-priors</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<h3 id="double-selection-lasso">Double-Selection LASSO</h3>
-<ul>
-<li>Forces the GDP cubic in</li>
-<li>LASSO selects the controls</li>
-<li>Post-selection OLS, 5 penalties</li>
-</ul>
-</div></div>
-<p><span class="takeaway fragment">If a completely different paradigm agrees, the shape is method-independent; if it disagrees, that disagreement is the story.</span></p>
-<aside class="notes">
-<p>DSL is the paper’s own Table-4 cross-check of its Table-1 BMA. Different inference philosophy, same variables-of-interest / controls split.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="five-dsl-penalties-five-negative-discriminants" class="slide level2 center">
-<h2>Five DSL penalties, five negative discriminants</h2>
-
-<img data-src="../figures/c90-paper-overview/c21_dml_lasso_main_pm25_discriminant.png" class="r-stretch quarto-figure-center"><p class="caption">Cubic discriminant for the five DSL penalties and both BMA priors — all seven bars below zero.</p><p><span class="takeaway fragment">Every frequentist penalty lands on the same side of zero as the Bayesian average — no inverted-N.</span></p>
-<aside class="notes">
-<p>Plugin −0.0131, CV −0.0119, Adaptive −0.0112, BIC −0.0119, sqrt-LASSO −0.0152. All fifteen GDP coefficients significant at p &lt; 0.001; same (−, +, −) sign pattern as BMA.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="the-shape-is-invariant-to-the-controls-even-zero-of-them" class="slide level2 center">
-<h2>The shape is invariant to the controls — even zero of them</h2>
-
-<img data-src="../figures/c90-paper-overview/c21_dml_lasso_main_pm25_selmap.png" class="r-stretch quarto-figure-center"><p class="caption">Which of the 20 covariates each penalty keeps: from keep-all (CV/BIC) to keep-none (sqrt-LASSO).</p><p><span class="takeaway fragment">You cannot select a control set that rescues the inverted-N — it is not there to rescue.</span></p>
-<aside class="notes">
-<p>Plugin keeps 2 of 20 covariates, sqrt-LASSO keeps none, CV/BIC keep all 20 — yet the discriminant stays negative throughout. The EKC shape is a property of the GDP terms, not of the control set.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="both-methods-fit-the-controls-linearly-do-trees-agree" class="slide level2 center">
-<h2>Both methods fit the controls linearly — do trees agree?</h2>
-<p>The final rung swaps linear/LASSO controls for a <strong>Random Forest</strong>: a joint-cubic partialling-out <strong>Double ML</strong> that residualizes the GDP cubic against a <em>nonparametric</em> control function, cross-fitted province-by-province.</p>
-<div class="fragment">
-<p>It relaxes the linearity of <em>everything except</em> the GDP cubic of interest — the strongest test we can run.</p>
-<p><span class="takeaway fragment">Let a flexible learner absorb the controls, then re-ask the shape without a linear straitjacket.</span></p>
-<aside class="notes">
-<p>GroupKFold by province keeps a province’s whole 17-year series in one fold; n_rep = 5 partitions; RandomForest nuisances for E[ln PM2.5|X] and each GDP term; joint OLS on the residuals recovers β₁, β₂, β₃. A linear-nuisance sanity gate first collapses this estimator onto the DSL band, so the RF result is a property of the learner, not a bug.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</div>
-</section>
-<section id="with-no-functional-form-imposed-still-no-inverted-n" class="slide level2 center">
-<h2>With no functional form imposed, still no inverted-N</h2>
-
-<img data-src="../figures/c90-paper-overview/c22_dml_forest_pm25_doseresponse_pdp.png" class="r-stretch quarto-figure-center"><p class="caption">Form-free RF dose-response (PDP solid, ALE dashed): flat then declining. Inverted-N signature: FALSE.</p><p><span class="takeaway fragment">The strongest, assumption-light test agrees: flat-then-falling, no interior min-then-max — no inverted-N.</span></p>
-<aside class="notes">
-<p>No cubic is imposed — a single forest learns the shape and we read its partial-dependence and accumulated-local-effects curves. has_invertedN_signature = FALSE for both PDP and ALE. The APOS quintile ladder tells the same story: flat through Q3, then ~8% below the poorest quintile at the top.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="the-strongest-objection-and-the-answer" class="slide level2 center">
-<h2>The strongest objection — and the answer</h2>
-<p><span class="objection">Objection.</span> A <em>very flexible</em> forest drives the parametric discriminant to ≈ 0 (even faintly positive) — is the inverted-N hiding after all?</p>
-<div class="fragment">
-<p><span class="rebuttal">Response.</span> No — that is <strong>bad-control bias</strong>. The covariates (energy, vehicles, patents) are <em>mediators</em> of GDP; a flexible forest predicts the GDP terms from them at R² ≈ 0.95 and absorbs GDP’s own signal. Regularize the forest — or drop the mediators — and the discriminant snaps back to <strong>−0.0152</strong>.</p>
-<p><span class="takeaway fragment">The near-zero discriminant is a mediator-over-control artifact, not a turning point.</span></p>
-<aside class="notes">
-<p>This is the one caveat, and it cuts <em>for</em> the finding. The next slide shows the regularization sweep: as the forest is pulled toward linear, the strong monotonic decline returns.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</div>
-</section>
-<section id="regularize-the-forest-and-the-decline-returns" class="slide level2 center">
-<h2>Regularize the forest and the decline returns</h2>
-
-<img data-src="../figures/c90-paper-overview/c22_dml_forest_pm25_sensitivity.png" class="r-stretch quarto-figure-center"><p class="caption">Regularize the RF toward linear (left → right) and the strong monotonic decline returns — the largest-leaf forest reproduces the sqrt-LASSO zero-covariate value (−0.0152) exactly.</p><p><span class="takeaway fragment">Magnitude is specification-dependent; the no-inverted-N sign is not.</span></p>
-<aside class="notes">
-<p>The largest-leaf RF reproduces the sqrt-LASSO zero-covariate value (−0.0152) exactly. Pulling the forest toward linearity — larger minimum leaf size, left → right — restores the DSL/BMA monotonic band, confirming the flexible-forest near-zero is a bad-control artifact rather than a hidden turning point.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="the-verdict" class="title-slide slide level1 divider center" data-background-color="#D55E00">
-<h1>The verdict</h1>
-<p><span class="act">Act III</span></p>
-</section>
-<section id="nine-specifications-three-paradigms-no-credible-inverted-n" class="slide level2 center">
-<h2>Nine specifications, three paradigms — no credible inverted-N</h2>
-
-<img data-src="../figures/c90-paper-overview/c22_dml_forest_pm25_discriminant.png" class="r-stretch quarto-figure-center"><p class="caption">Discriminant across all nine specs: DSL/BMA strongly negative; flexible RF-DML collapses to ~0 (over-control), never credibly positive.</p><p><span class="takeaway fragment">Bayesian, frequentist, and nonparametric machinery all reject the inverted-N — the result is method-independent.</span></p>
-<aside class="notes">
-<p>The seven linear-nuisance specs cluster tightly at −0.011 to −0.016; the two flexible-RF specs sit at ≈0 with the flipped sign — the bad-control signature, not an inverted-N. No specification puts a credible turning point inside the data.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="no-inverted-n-pm2.5-falls-monotonically-with-income" class="slide level2 center" data-background-color="#2874A6">
-<h2>No inverted-N: PM2.5 falls monotonically with income</h2>
-<p><span class="bignum">−0.016</span></p>
-<p><span class="bignum-label">cubic discriminant on GDP per capita — negative across every linear-nuisance method, and no inverted-N signature under trees</span></p>
-</section>
-<section id="why-china-differs-the-post-peak-tail-of-a-global-inverted-n" class="slide level2 center">
-<h2>Why China differs: the post-peak tail of a global inverted-N</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h3 id="reading-1-position">Reading 1 — position</h3>
-<ul>
-<li>2004–2020 provinces may sit <strong>past</strong> the low-income turning point (~$1,273)</li>
-<li>We observe only the <strong>descending</strong> segment of a global inverted-N</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<h3 id="reading-2-heterogeneity">Reading 2 — heterogeneity</h3>
-<ul>
-<li>Within-China lacks the <strong>institutional / policy</strong> spread across countries</li>
-<li>No regulatory-regime differences to generate the early upswing</li>
-</ul>
-</div></div>
-<p><span class="takeaway fragment">A genuine cross-setting finding, not a replication failure — the BMA/DSL machinery replicates faithfully; only the shape differs.</span></p>
-<aside class="notes">
-<p>The paper’s turning points are in PPP-2017 USD; Chinese provincial income in this window largely exceeds the lower turn. Same commands, same discriminant algebra, same “robust across penalties” property — the destination differs because the setting does.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="suggested-next-steps" class="slide level2 center">
-<h2>Suggested next steps</h2>
-<ul>
-<li class="fragment"><strong>A comparative predictor-importance ranking</strong> — line up BMA posterior inclusion probabilities, the DSL selection map, and the tree learners’ importances on one scale. Do spatial lags of GDP belong in the candidate set?</li>
-<li class="fragment"><strong>SHAP for global interpretation</strong> — Shapley additive explanations put every model’s predictors in one comparable currency, panel-wide.</li>
-<li class="fragment"><strong>SHAP for localized interpretation</strong> — province-year attributions: where the panel-wide story fits, and which provinces it misses.</li>
-</ul>
-<p><span class="takeaway fragment">The shape verdict is settled — the open question is <em>which predictors carry it</em>, and SHAP is the common language for asking.</span></p>
-<aside class="notes">
-<p>The ingredients already exist: posterior inclusion probabilities from c11, the selection map from c21, forest importances from c22 and the ml00–ml02 RF/XGBoost cross-checks — this is assembly, not new estimation. The dataset already carries 66 *_Wqueen spatial-lag variables, so the spatial-lag question is one specification away. Global SHAP = mean |SHAP| ordering and a beeswarm; local SHAP = waterfall plots for a chosen province-year. One caveat carries straight over from the over-control slide: SHAP on mediator-heavy covariates (energy, vehicles, patents) will attribute to GDP’s consequences, so the ranking has to be read with the same bad-control warning — it describes prediction, not causal contribution.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section id="across-countries-co₂-bends-twice-within-china-pm2.5-only-falls." class="title-slide slide level1 divider center" data-background-color="#D55E00">
-<h1>Across countries, CO₂ bends twice; within China, PM2.5 only falls.</h1>
-
-</section>
+  <!-- ===== deck card: copy this block to add a deck ===== -->
+  <article class="deck">
+    <h3><a href="c90-paper-overview/">Does the inverted-N EKC survive inside one country?</a></h3>
+    <p class="sub">
+      Chinese provincial PM2.5 — a BMA · Double-Selection LASSO · Double-ML triangulation.
+      Whole-paper overview.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">−0.016</div>
+        <div class="cap">cubic discriminant · no inverted-N</div>
+      </div>
+      <div class="stat">
+        <div class="num">0</div>
+        <div class="cap">inverted-N signatures (RF dose-response)</div>
+      </div>
+      <div class="stat">
+        <div class="num">527</div>
+        <div class="cap">province-years · 31 × 17</div>
+      </div>
     </div>
-  <div class="quarto-auto-generated-content" style="display: none;">
-<div class="footer footer-default">
+    <div class="meta">
+      <span class="tag">BMA</span>
+      <span class="tag">Double-Selection LASSO</span>
+      <span class="tag">Random-Forest Double ML</span>
+      <span class="tag">23 slides</span>
+      <a class="open" href="c90-paper-overview/">Open deck →</a>
+    </div>
+  </article>
+  <!-- ===== end deck card ===== -->
+
+  <footer>
+    <p class="keys">
+      In any deck: <strong>M</strong> menu · <strong>B</strong> chalkboard ·
+      <strong>S</strong> speaker view · <strong>O</strong> overview ·
+      <strong>?print-pdf</strong> appended to the URL then Print → Save as PDF.
+    </p>
+    <p>
+      Decks are Quarto reveal.js documents rendered from <code>&lt;deck&gt;/slides.qmd</code>.
+      This folder is self-contained — see <a href="README.md">README.md</a> for how to
+      render it and how it is published.
+    </p>
+    <p>Carlos Mendez · <a href="https://carlos-mendez.org">carlos-mendez.org</a></p>
+  </footer>
 
 </div>
-</div></div>
-
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="slides_files/libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="slides_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
-
-      // Full list of configuration options available at:
-      // https://revealjs.com/config/
-      Reveal.initialize({
-'controlsAuto': true,
-'previewLinksAuto': true,
-'pdfSeparateFragments': false,
-'autoAnimateEasing': "ease",
-'autoAnimateDuration': 1,
-'autoAnimateUnmatched': true,
-'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":true},
-'smaller': false,
- 
-        // Display controls in the bottom right corner
-        controls: false,
-
-        // Help the user learn the controls by providing hints, for example by
-        // bouncing the down arrow when they first encounter a vertical slide
-        controlsTutorial: false,
-
-        // Determines where controls appear, "edges" or "bottom-right"
-        controlsLayout: 'edges',
-
-        // Visibility rule for backwards navigation arrows; "faded", "hidden"
-        // or "visible"
-        controlsBackArrows: 'faded',
-
-        // Display a presentation progress bar
-        progress: true,
-
-        // Display the page number of the current slide
-        slideNumber: 'c/t',
-
-        // 'all', 'print', or 'speaker'
-        showSlideNumber: 'all',
-
-        // Add the current slide number to the URL hash so that reloading the
-        // page/copying the URL will return you to the same slide
-        hash: true,
-
-        // Start with 1 for the hash rather than 0
-        hashOneBasedIndex: false,
-
-        // Flags if we should monitor the hash and change slides accordingly
-        respondToHashChanges: true,
-
-        // Push each slide change to the browser history
-        history: true,
-
-        // Enable keyboard shortcuts for navigation
-        keyboard: true,
-
-        // Enable the slide overview mode
-        overview: true,
-
-        // Disables the default reveal.js slide layout (scaling and centering)
-        // so that you can use custom CSS layout
-        disableLayout: false,
-
-        // Vertical centering of slides
-        center: true,
-
-        // Enables touch navigation on devices with touch input
-        touch: true,
-
-        // Loop the presentation
-        loop: false,
-
-        // Change the presentation direction to be RTL
-        rtl: false,
-
-        // see https://revealjs.com/vertical-slides/#navigation-mode
-        navigationMode: 'linear',
-
-        // Randomizes the order of slides each time the presentation loads
-        shuffle: false,
-
-        // Turns fragments on and off globally
-        fragments: true,
-
-        // Flags whether to include the current fragment in the URL,
-        // so that reloading brings you to the same fragment position
-        fragmentInURL: false,
-
-        // Flags if the presentation is running in an embedded mode,
-        // i.e. contained within a limited portion of the screen
-        embedded: false,
-
-        // Flags if we should show a help overlay when the questionmark
-        // key is pressed
-        help: true,
-
-        // Flags if it should be possible to pause the presentation (blackout)
-        pause: true,
-
-        // Flags if speaker notes should be visible to all viewers
-        showNotes: false,
-
-        // Global override for autoplaying embedded media (null/true/false)
-        autoPlayMedia: null,
-
-        // Global override for preloading lazy-loaded iframes (null/true/false)
-        preloadIframes: null,
-
-        // Number of milliseconds between automatically proceeding to the
-        // next slide, disabled when set to 0, this value can be overwritten
-        // by using a data-autoslide attribute on your slides
-        autoSlide: 0,
-
-        // Stop auto-sliding after user input
-        autoSlideStoppable: true,
-
-        // Use this method for navigation when auto-sliding
-        autoSlideMethod: null,
-
-        // Specify the average time in seconds that you think you will spend
-        // presenting each slide. This is used to show a pacing timer in the
-        // speaker view
-        defaultTiming: null,
-
-        // Enable slide navigation via mouse wheel
-        mouseWheel: false,
-
-        // The display mode that will be used to show slides
-        display: 'block',
-
-        // Hide cursor if inactive
-        hideInactiveCursor: true,
-
-        // Time before the cursor is hidden (in ms)
-        hideCursorTime: 5000,
-
-        // Opens links in an iframe preview overlay
-        previewLinks: false,
-
-        // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'fade',
-
-        // Transition speed (default/fast/slow)
-        transitionSpeed: 'default',
-
-        // Transition style for full page slide backgrounds
-        // (none/fade/slide/convex/concave/zoom)
-        backgroundTransition: 'none',
-
-        // Number of slides away from the current that are visible
-        viewDistance: 3,
-
-        // Number of slides away from the current that are visible on mobile
-        // devices. It is advisable to set this to a lower number than
-        // viewDistance in order to save resources.
-        mobileViewDistance: 2,
-
-        // The "normal" size of the presentation, aspect ratio will be preserved
-        // when the presentation is scaled to fit different resolutions. Can be
-        // specified using percentage units.
-        width: 1280,
-
-        height: 720,
-
-        // Factor of the display size that should remain empty around the content
-        margin: 0.1,
-
-        math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
-          config: 'TeX-AMS_HTML-full',
-          tex2jax: {
-            inlineMath: [['\\(','\\)']],
-            displayMath: [['\\[','\\]']],
-            balanceBraces: true,
-            processEscapes: false,
-            processRefs: true,
-            processEnvironments: true,
-            preview: 'TeX',
-            skipTags: ['script','noscript','style','textarea','pre','code'],
-            ignoreClass: 'tex2jax_ignore',
-            processClass: 'tex2jax_process'
-          },
-        },
-
-        // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
-
-          RevealMath,
-          RevealNotes,
-          RevealSearch,
-          RevealZoom
-        ]
-      });
-    </script>
-    <script id="quarto-html-after-body" type="application/javascript">
-      window.document.addEventListener("DOMContentLoaded", function (event) {
-        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-        tabsets.forEach(function(tabset) {
-          const tabby = new Tabby('#' + tabset.id);
-        });
-        const isCodeAnnotation = (el) => {
-          for (const clz of el.classList) {
-            if (clz.startsWith('code-annotation-')) {                     
-              return true;
-            }
-          }
-          return false;
-        }
-        const onCopySuccess = function(e) {
-          // button target
-          const button = e.trigger;
-          // don't keep focus
-          button.blur();
-          // flash "checked"
-          button.classList.add('code-copy-button-checked');
-          var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "Copied!");
-          let tooltip;
-          if (window.bootstrap) {
-            button.setAttribute("data-bs-toggle", "tooltip");
-            button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "Copied!");
-            tooltip = new bootstrap.Tooltip(button, 
-              { trigger: "manual", 
-                customClass: "code-copy-button-tooltip",
-                offset: [0, -8]});
-            tooltip.show();    
-          }
-          setTimeout(function() {
-            if (tooltip) {
-              tooltip.hide();
-              button.removeAttribute("data-bs-title");
-              button.removeAttribute("data-bs-toggle");
-              button.removeAttribute("data-bs-placement");
-            }
-            button.setAttribute("title", currentTitle);
-            button.classList.remove('code-copy-button-checked');
-          }, 1000);
-          // clear code selection
-          e.clearSelection();
-        }
-        const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-          text: getTextToCopy
-        });
-        clipboard.on('success', onCopySuccess);
-        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-            text: getTextToCopy,
-            container: window.document.getElementById('quarto-embedded-source-code-modal')
-          });
-          clipboardModal.on('success', onCopySuccess);
-        }
-          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-          var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
-          var isInternal = (href) => {
-              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-          }
-          // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-          for (var i=0; i<links.length; i++) {
-            const link = links[i];
-            if (!isInternal(link.href)) {
-              // undo the damage that might have been done by quarto-nav.js in the case of
-              // links that we want to consider external
-              if (link.dataset.originalHref !== undefined) {
-                link.href = link.dataset.originalHref;
-              }
-            }
-          }
-        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-          const config = {
-            allowHTML: true,
-            maxWidth: 500,
-            delay: 100,
-            arrow: false,
-            appendTo: function(el) {
-                return el.closest('section.slide') || el.parentElement;
-            },
-            interactive: true,
-            interactiveBorder: 10,
-            theme: 'light-border',
-            placement: 'bottom-start',
-          };
-          if (contentFn) {
-            config.content = contentFn;
-          }
-          if (onTriggerFn) {
-            config.onTrigger = onTriggerFn;
-          }
-          if (onUntriggerFn) {
-            config.onUntrigger = onUntriggerFn;
-          }
-            config['offset'] = [0,0];
-            config['maxWidth'] = 700;
-          window.tippy(el, config); 
-        }
-        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-        for (var i=0; i<noterefs.length; i++) {
-          const ref = noterefs[i];
-          tippyHover(ref, function() {
-            // use id or data attribute instead here
-            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-            try { href = new URL(href).hash; } catch {}
-            const id = href.replace(/^#\/?/, "");
-            const note = window.document.getElementById(id);
-            if (note) {
-              return note.innerHTML;
-            } else {
-              return "";
-            }
-          });
-        }
-        const findCites = (el) => {
-          const parentEl = el.parentElement;
-          if (parentEl) {
-            const cites = parentEl.dataset.cites;
-            if (cites) {
-              return {
-                el,
-                cites: cites.split(' ')
-              };
-            } else {
-              return findCites(el.parentElement)
-            }
-          } else {
-            return undefined;
-          }
-        };
-        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-        for (var i=0; i<bibliorefs.length; i++) {
-          const ref = bibliorefs[i];
-          const citeInfo = findCites(ref);
-          if (citeInfo) {
-            tippyHover(citeInfo.el, function() {
-              var popup = window.document.createElement('div');
-              citeInfo.cites.forEach(function(cite) {
-                var citeDiv = window.document.createElement('div');
-                citeDiv.classList.add('hanging-indent');
-                citeDiv.classList.add('csl-entry');
-                var biblioDiv = window.document.getElementById('ref-' + cite);
-                if (biblioDiv) {
-                  citeDiv.innerHTML = biblioDiv.innerHTML;
-                }
-                popup.appendChild(citeDiv);
-              });
-              return popup.innerHTML;
-            });
-          }
-        }
-      });
-      </script>
-    
-
-</body></html>
+</body>
+</html>
