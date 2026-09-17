@@ -131,14 +131,19 @@ The decks are **pre-rendered and committed**, so no build step and no CI are nee
    folder, not just a deck subfolder: a deck alone leaves its `../figures/` behind and every
    image 404s.
 2. Push, then **Settings ▸ Pages ▸ Source: Deploy from a branch** → the default branch
-   (`main` here), folder **`/ (root)`**.
+   (`main` there), folder **`/ (root)`**.
 3. The landing page is at `https://<user>.github.io/<repo>/`, each deck at
    `https://<user>.github.io/<repo>/<deck-name>/`.
 
-This repo is that published copy: <https://quarcs-lab.github.io/project2025b-slides/> →
-deck at <https://quarcs-lab.github.io/project2025b-slides/c90-paper-overview/>.
-
 `.nojekyll` must ship with it — without it, Jekyll may drop parts of Quarto's output.
+
+**The published copy of this folder** is <https://github.com/quarcs-lab/project2025b-slides>
+→ site at <https://quarcs-lab.github.io/project2025b-slides/>, decks at
+<https://quarcs-lab.github.io/project2025b-slides/c90-paper-overview/> and
+<https://quarcs-lab.github.io/project2025b-slides/c30-shap-dml-forest-pm25/>.
+To publish a new or updated deck there, copy this folder over a clone of that repo and push
+(the project keeps a gitignored working clone at `.publish/project2025b-slides/`); Pages
+rebuilds on push — no CI, no Settings change.
 
 The same folder works unchanged on **Netlify** (drag-and-drop, or publish directory `.`
 with an empty build command) or any static host.

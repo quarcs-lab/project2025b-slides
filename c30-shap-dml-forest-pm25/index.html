@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="slides_files/libs/clipboard/clipboard.min.js"></script>
+<script src="slides_files/libs/quarto-html/tabby.min.js"></script>
+<script src="slides_files/libs/quarto-html/popper.min.js"></script>
+<script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.27">
+
+  <meta name="dcterms.date" content="2026-09-17">
+  <title>What the forests see</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto-04cb10324407815b77c685a673f49383.css">
+  <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">What the forests see</h1>
+  <p class="subtitle">SHAP attributions of the tree-based EKC models — Chinese provincial PM2.5, 2004–2020</p>
+  <div class="title-result-strip">
+    <div class="kr"><span class="kr-num">19/23</span><span class="kr-cap">GDP’s rank among PM2.5-forest features</span></div>
+    <div class="kr"><span class="kr-num">1.1%</span><span class="kr-cap">GDP’s share of SHAP attribution</span></div>
+    <div class="kr"><span class="kr-num">0/6</span><span class="kr-cap">inverted-N signatures · panel + 5 quintiles</span></div>
+  </div>
+  <p class="author"><a href="https://carlos-mendez.org">Carlos Mendez</a></p>
+  <p class="institute">Nagoya University (GSID)</p>
+  <p class="date">September 17, 2026</p>
+</section>
+<section>
+<section id="the-forests-lost-gdp-what-do-they-use-instead" class="title-slide slide level1 divider center" data-background-color="#2874A6">
+<h1>The forests lost GDP — what do they use instead?</h1>
+<p><span class="act">Act I</span></p>
+</section>
+<section id="three-methods-found-no-inverted-n-yet-flexible-forests-lose-gdp" class="slide level2 center">
+<h2>Three methods found no inverted-N — yet flexible forests “lose” GDP</h2>
+<p>The project’s BMA and Double-Selection LASSO fits put the cubic discriminant <strong>below zero</strong> (about −0.011 to −0.016): PM2.5 falls with income, with no inverted-N.</p>
+<div class="fragment">
+<p>A flexible <strong>Random-Forest Double ML</strong> collapsed that discriminant to about zero (+0.0077 and +0.0008). The reason: the 20 controls predict GDP almost perfectly (nuisance <span class="math inline">\(R^2 \approx 0.95\)</span>). They behave like GDP’s mediators and absorb its signal.</p>
+<p><span class="takeaway fragment">The trees did not find an inverted-N — they stopped seeing GDP. So what are they looking at?</span></p>
+<aside class="notes">
+<p>c11 BMA discriminant −0.0163 (UIP) / −0.0160 (Robust); c21 DSL −0.011 to −0.015 across five penalties. c22 RF-DML: Variant A +0.0077 (p = 0.064), Variant B +0.0008 (p = 0.60), both with the flipped (+,−,−) sign pattern — an over-control artifact, not a turning point. Regularizing the forest restored −0.0152. This deck opens the same forests with SHAP.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="three-questions-for-shap" class="slide level2 center">
+<h2>Three questions for SHAP</h2>
+<ul>
+<li class="fragment"><strong>Drivers:</strong> which predictors carry the forest’s PM2.5 predictions — and where does GDP rank?</li>
+<li class="fragment"><strong>Income groups:</strong> does the answer change between poor and rich provinces?</li>
+<li class="fragment"><strong>Shape:</strong> does the forest’s attribution to GDP bend into an inverted-N anywhere?</li>
+</ul>
+<p><span class="takeaway fragment">Same fitted forests as c22 — we only change how we look at them.</span></p>
+<aside class="notes">
+<p>Descriptive, predictive attribution — not causal. Three forests refit on the full 527-observation panel with c22’s exact hyperparameters and seed 42; all c22 reference numbers reproduce (largest R² gap 0.0004). Quintiles are province quintiles by 2004–2020 mean ln GDP per capita.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="gdp-ranks-19th-of-23-features-in-the-pm2.5-forest" class="slide level2 center">
+<h2>GDP ranks 19th of 23 features in the PM2.5 forest</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_global_shape_rf.png" class="r-stretch quarto-figure-center"><p class="caption">Shape RF, interventional TreeSHAP: mean |SHAP| (left, ln_gdppc pinned in vermillion) and beeswarm (right).</p><p><span class="takeaway fragment">GDP’s typical attribution is 0.0039 log points — about 0.16 μg/m³, an eleventh of the top feature.</span></p>
+<aside class="notes">
+<p>Spoiler slide. ln_gdppc: mean |SHAP| 0.003861 log points, 1.15% of total attribution, rank 19 of 23 (near-tie with utility-model patents at 0.003851). Across all 527 province-years its attribution stays within −1.8% to +0.8% of PM2.5. The leaders: water supply per capita 13.1%, secondary-industry share 13.1% (a numerical tie), government-expenditure share 12.1%, agricultural water 9.0%, passenger turnover 7.5%, Province FE block 6.8%.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="opening-the-forests-with-shap" class="title-slide slide level1 divider center" data-background-color="#0072B2">
+<h1>Opening the forests with SHAP</h1>
+<p><span class="act">Act II</span></p>
+</section>
+<section id="shap-splits-every-prediction-into-additive-feature-credits" class="slide level2 center">
+<h2>SHAP splits every prediction into additive feature credits</h2>
+<p><span class="math display">\[f(x_i) \;=\; \phi_0 \;+\; \sum_{j=1}^{M} \phi_{ij}, \qquad \phi_0 = \mathbb{E}\,[f(X)]\]</span></p>
+<p><span class="comment">Interventional TreeSHAP: each credit <span class="math inline">\(\phi_{ij}\)</span> averages the feature’s marginal contribution over coalitions, filling absent features from all 527 province-years. Credits are in log points of the model’s target.</span></p>
+<div class="fragment">
+<ul>
+<li>The 30 province and 16 year dummies are summed into <strong>Province FE</strong> and <strong>Year FE</strong> blocks (exact by additivity).</li>
+<li>Path-dependent TreeSHAP is run as a global check. All additivity identities hold to below <span class="math inline">\(10^{-7}\)</span>.</li>
+</ul>
+<p><span class="takeaway fragment">Every attribution is a statement about the fitted forest, not a causal effect.</span></p>
+<aside class="notes">
+<p>Base value φ₀ = 3.646 log points (38.3 μg/m³), exactly the mean in-sample prediction. Pitfall avoided: shap’s default masker silently subsamples the background to 100 rows; the script passes all 527 and asserts it. FE blocks are lower bounds on province/year heterogeneity — the forest also identifies provinces through near-time-invariant controls. The forests are overfit in-sample (R² ≈ 0.91 vs 0.81 out-of-bag), so SHAP explains fitted noise too.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="three-forests-one-question-each" class="slide level2 center">
+<h2>Three forests, one question each</h2>
+<div class="columns">
+<div class="column" style="width:33%;">
+<h3 id="shape-rf">Shape RF</h3>
+<ul>
+<li>ln PM2.5 on ln GDPpc + 20 controls + FE</li>
+<li>1,000 trees</li>
+<li><em>Where does GDP rank?</em></li>
+<li>in-sample <span class="math inline">\(R^2\)</span> 0.91</li>
+</ul>
+</div><div class="column" style="width:33%;">
+<h3 id="gdp-nuisance-rf">GDP-nuisance RF</h3>
+<ul>
+<li>ln GDPpc on 20 controls + FE</li>
+<li>500 trees (Variant A)</li>
+<li><em>What rebuilds GDP?</em></li>
+<li>in-sample <span class="math inline">\(R^2\)</span> 0.98</li>
+</ul>
+</div><div class="column" style="width:34%;">
+<h3 id="outcome-nuisance-rf">Outcome-nuisance RF</h3>
+<ul>
+<li>ln PM2.5 on 20 controls + FE</li>
+<li>500 trees, no GDP</li>
+<li><em>What predicts PM2.5 without GDP?</em></li>
+<li>in-sample <span class="math inline">\(R^2\)</span> 0.91</li>
+</ul>
+</div></div>
+<p><span class="takeaway fragment">Comparing the three forests reveals over-control from the prediction side.</span></p>
+<aside class="notes">
+<p>All three refit with c22’s hyperparameters (min_samples_leaf 5, max_features sqrt, seed 42). The GDP-nuisance forest even predicts GDP for an entirely unseen province (province-block R² 0.92); the PM2.5 forests do not (0.30), which measures new-province prediction, not explanatory power.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="province-quintiles-fix-each-provinces-income-group-for-17-years" class="slide level2 smaller center">
+<h2>Province quintiles fix each province’s income group for 17 years</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quintile</th>
+<th style="text-align: right;">Provinces</th>
+<th>Median province</th>
+<th style="text-align: right;">GDPpc, geometric mean (yuan)</th>
+<th style="text-align: center;">East / Central / West</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Q1</td>
+<td style="text-align: right;">7</td>
+<td><span class="key">Yunnan</span></td>
+<td style="text-align: right;">16,735 – 24,792</td>
+<td style="text-align: center;">0 / 1 / 6</td>
+</tr>
+<tr class="even">
+<td>Q2</td>
+<td style="text-align: right;">6</td>
+<td><span class="key">Jilin</span></td>
+<td style="text-align: right;">24,899 – 26,826</td>
+<td style="text-align: center;">1 / 3 / 2</td>
+</tr>
+<tr class="odd">
+<td>Q3</td>
+<td style="text-align: right;">6</td>
+<td><span class="key">Hebei</span></td>
+<td style="text-align: right;">26,912 – 30,195</td>
+<td style="text-align: center;">1 / 3 / 2</td>
+</tr>
+<tr class="even">
+<td>Q4</td>
+<td style="text-align: right;">6</td>
+<td><span class="key">Liaoning</span></td>
+<td style="text-align: right;">33,123 – 47,029</td>
+<td style="text-align: center;">3 / 1 / 2</td>
+</tr>
+<tr class="odd">
+<td>Q5</td>
+<td style="text-align: right;">6</td>
+<td><span class="key">Jiangsu</span></td>
+<td style="text-align: right;">49,170 – 90,121</td>
+<td style="text-align: center;">6 / 0 / 0</td>
+</tr>
+</tbody>
+</table>
+<p><span class="takeaway fragment">Provinces are ranked by mean ln GDPpc. The quintiles mix income with geography: Q1 is 6/7 Western, Q5 is all Eastern.</span></p>
+<aside class="notes">
+<p>Members — Q1: Guizhou, Gansu, Guangxi, Yunnan, Tibet, Qinghai, Heilongjiang. Q2: Jiangxi, Sichuan, Jilin, Anhui, Ningxia, Hainan. Q3: Henan, Shanxi, Hebei, Hunan, Xinjiang, Shaanxi. Q4: Hubei, Chongqing, Liaoning, Inner Mongolia, Shandong, Fujian. Q5: Guangdong, Zhejiang, Jiangsu, Tianjin, Shanghai, Beijing. 119 / 102 / 102 / 102 / 102 province-years. Q2 and Q3 are packed tightly (a 21% income range together; Hainan and Henan differ by 0.003), so Q2–Q3 contrasts are about which provinces sit there. Year by year the quintiles overlap heavily on the GDP axis (Q1 reaches 52,280 yuan; Q5 starts at 19,790). Per-quintile SHAP importance is distance from the national 527-row background, not importance within the quintile.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="interventional-and-path-dependent-shap-agree-rho-approx-0.99" class="slide level2 center">
+<h2>Interventional and path-dependent SHAP agree (<span class="math inline">\(\rho \approx 0.99\)</span>)</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_explainer_compare.png" class="r-stretch quarto-figure-center"><p class="caption">Global mean |SHAP| under both explainers for the three forests (blue interventional, orange path-dependent).</p><p><span class="takeaway fragment">The global rankings do not depend on how correlated features are handled — but agreement is not identification.</span></p>
+<aside class="notes">
+<p>Spearman ρ 0.989 / 0.995 / 0.990 over grouped features; identical top-10 sets; FE shares move by at most 0.12 pp; SHAP(ln_gdppc) correlates 0.991 across explainers. Only near-tied neighbours swap (the shape RF’s tied top pair; GDP 19 → 21). Five-seed path-dependent refits keep ρ ≥ 0.976 with GDP at ranks 19–22.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="gdp-stays-on-the-margins-everywhere" class="title-slide slide level1 divider center" data-background-color="#D55E00">
+<h1>GDP stays on the margins — everywhere</h1>
+<p><span class="act">Act III</span></p>
+</section>
+<section id="gdp-stays-marginal-in-every-income-quintile-rank-1821" class="slide level2 center">
+<h2>GDP stays marginal in every income quintile (rank 18–21)</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_quintile_bar_shape_rf.png" class="r-stretch quarto-figure-center"><p class="caption">Shape RF: each quintile’s own top 10 by mean |SHAP|, ln_gdppc pinned in vermillion with its rank in each title.</p><p><span class="takeaway fragment">From the poorest to the richest provinces, GDP never holds more than 1.4% of the attribution.</span></p>
+<aside class="notes">
+<p>ln_gdppc rank 19 / 18 / 20 / 19 / 21 and share 1.0% / 1.2% / 1.1% / 1.4% / 1.1% in Q1–Q5. Leaders shift: fiscal and industrial structure (govt-expenditure share, secondary share) lead Q1–Q2; water supply per capita leads Q3–Q5. Mean signed SHAP(ln_gdppc) moves from +0.0014/+0.0008/+0.0016 (Q1–Q3) to −0.0012/−0.0029 (Q4–Q5).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="quintile-pollution-gaps-are-attributed-to-structure-water-and-province-not-gdp" class="slide level2 center">
+<h2>Quintile pollution gaps are attributed to structure, water and province — not GDP</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_quintile_beeswarm_shape_rf.png" class="r-stretch quarto-figure-center"><p class="caption">Shape RF: per-quintile beeswarms on a shared x-axis (each quintile’s own top 10, ln_gdppc pinned).</p><p><span class="comment">Predicted PM2.5 (geometric mean) Q1–Q5: 31.0 · 34.8 · <strong>46.6</strong> · 39.3 · 43.4 μg/m³, not monotone in income. GDP ranks 19 · 18 · 20 · 19 · 21.</span></p>
+<p><span class="takeaway fragment">Structure, water and province carry 72–89% of the quintile gaps. GDP carries at most 0.003 log points.</span></p>
+<aside class="notes">
+<p>Gaps from the national baseline (38.3 μg/m³) run −0.21 to +0.20 log points. Industrial, fiscal and tertiary shares, the two water variables and the Province FE block carry 72%–89% of the gap in Q1, Q2, Q3 and Q5; Q4’s small gap (+0.025) is offsetting terms. This is an attribution of the fitted forest, not a causal decomposition: quintiles mix income with geography, and the controls can stand in for GDP in prediction.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="in-every-median-province-gdp-moves-predicted-pm2.5-by-less-than-0.4" class="slide level2 center">
+<h2>In every median province, GDP moves predicted PM2.5 by less than 0.4%</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_waterfall_median_shape_rf.png" class="r-stretch quarto-figure-center"><p class="caption">Shape RF: 17-year-average waterfalls for Yunnan, Jilin, Hebei, Liaoning and Jiangsu.</p><p><span class="takeaway fragment">Yunnan sits 28% below baseline and Jiangsu 22% above it. GDP’s share of either gap is negligible.</span></p>
+<aside class="notes">
+<p>Yunnan: 3.646 → 3.318 (38.3 → 27.6 μg/m³); its three largest attributions (low industrial share −0.054, high fiscal share −0.052, light passenger transport −0.040) sum to 44% of the gap; ln_gdppc +0.0001, rank 23 of 23. Hebei +25% (govt-exp +0.041, secd +0.032; GDP +0.0037, rank 15). Jiangsu +22% (govt-exp +0.052, secd +0.048, Province FE +0.044; GDP −0.0012). 17-year averages cancel opposite-signed early/late contributions; rows are sorted by size, so the aggregated “others” row can sit mid-stack.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="no-inverted-n-in-any-quintiles-shapgdp-curve" class="slide level2 center">
+<h2>No inverted-N in any quintile’s SHAP(GDP) curve</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_dependence_shape_rf.png" class="r-stretch quarto-figure-center"><p class="caption">SHAP(ln_gdppc) vs ln_gdppc by province quintile with LOWESS (frac 2/3) and the pre-specified verdict in each facet.</p><p><span class="takeaway fragment">Every curve ends lower than it starts, by 0.6%–1.4% of PM2.5. None rises again.</span></p>
+<aside class="notes">
+<p>Full panel: flat to a peak near 21,900 yuan, then declining, crossing zero around 40,000 yuan — the flat-then-declining shape of c22’s PDP/ALE. End − start: full panel −0.0088 log points (−0.9%); quintiles −0.0056 to −0.0138. Each facet’s points trace province time paths (within-quintile correlation of ln_gdppc with year 0.87–0.98) — do not stitch the facets into a “piecewise EKC”. Shape labels are reported for the full panel only (pre-specified): quintile labels flip with the bandwidth.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-false-flag-alone-is-weak-evidence-the-size-of-the-decline-is-what-stands-out" class="slide level2 smaller center">
+<h2>A False flag alone is weak evidence — the size of the decline is what stands out</h2>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Subset</th>
+<th>Pre-specified decision</th>
+<th style="text-align: right;">End − start (log pts)</th>
+<th style="text-align: right;"><em>Post hoc:</em> perm. p, decline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Full panel</td>
+<td>no inverted-N</td>
+<td style="text-align: right;">−0.0088</td>
+<td style="text-align: right;"><span class="key">0.005</span></td>
+</tr>
+<tr class="even">
+<td>Q1</td>
+<td>no inverted-N</td>
+<td style="text-align: right;">−0.0081</td>
+<td style="text-align: right;"><span class="key">0.005</span></td>
+</tr>
+<tr class="odd">
+<td>Q2</td>
+<td>no inverted-N</td>
+<td style="text-align: right;">−0.0101</td>
+<td style="text-align: right;"><span class="key">0.005</span></td>
+</tr>
+<tr class="even">
+<td>Q3</td>
+<td>no inverted-N</td>
+<td style="text-align: right;">−0.0056</td>
+<td style="text-align: right;"><span class="key">0.005</span></td>
+</tr>
+<tr class="odd">
+<td>Q4</td>
+<td>no inverted-N</td>
+<td style="text-align: right;">−0.0138</td>
+<td style="text-align: right;"><span class="key">0.005</span></td>
+</tr>
+<tr class="even">
+<td>Q5</td>
+<td>no inverted-N</td>
+<td style="text-align: right;">−0.0106</td>
+<td style="text-align: right;"><span class="key">0.005</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="takeaway fragment">No inverted-N, but little power against a small one. The post-hoc decline test cannot separate income from the late-2010s fall in PM2.5.</span></p>
+<aside class="notes">
+<p>Pre-specified rule: LOWESS frac 2/3 on a 5th–95th-percentile grid; c22’s inverted-N flag (rise_tol 0.20, itself set post hoc in c22); 200 within-subset permutations; a True flag counts only if rise ≥ 0.01 log points and p ≤ 0.10. At the headline bandwidth 53.5%–76.5% of permuted-noise curves are also False, and the positive branch was out of reach for the full panel, Q1 and Q3 (curve ranges 0.008–0.009). Post hoc and descriptive only: every observed net decline exceeds all 200 permuted curves (p = 1/201) and the curves span 5–13× the median noise range — but the permutation also breaks the time link, so within quintiles the decline cannot be told apart from the common post-2014 fall in PM2.5.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="patents-and-motorisation-rebuild-gdp-64.5" class="slide level2 center">
+<h2>Patents and motorisation rebuild GDP (64.5%)</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_global_nuis_gdp.png" class="r-stretch quarto-figure-center"><p class="caption">GDP-nuisance RF: global mean |SHAP| and beeswarm.</p><p><span class="takeaway fragment">The forest rebuilds GDP from patents, vehicles and drivers. The FE blocks get about 1%.</span></p>
+<aside class="notes">
+<p>Utility-model patents 16.7%, civilian vehicles 14.7%, driver share 13.0%, invention patents 12.9%, design patents 7.2% — each almost perfectly monotone and positive (ρ = +0.986 to +0.995). Higher-education and tertiary shares add 15.1%; electricity and thermal power generation rank 12th/13th (4.5%). Province FE 0.4%, Year FE 0.7%. SHAP identifies the fitted proxies, not their direction: these indicators could be consequences of growth, trend proxies, or causes of it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-patentvehicle-core-holds-in-every-quintile" class="slide level2 center">
+<h2>The patent–vehicle core holds in every quintile</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_quintile_bar_nuis_gdp.png" class="r-stretch quarto-figure-center"><p class="caption">GDP-nuisance RF: per-quintile mean |SHAP| (own top 10 + others).</p><p><span class="takeaway fragment">The same four indicators lead every income group. Invention patents move up to second place in Q5.</span></p>
+<aside class="notes">
+<p>Top four in every quintile: utility patents, civilian vehicles, driver share, invention patents (10%–17% each). In Q5 invention patents reach 15.0% (11.8%–12.6% in Q1–Q4) — mostly because the six Eastern Q5 provinces sit far above the national invention-patent level (median ln 3.02 vs 0.12–1.49 elsewhere), since per-quintile importance is distance from the national background.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="jiangsus-72-gdp-premium-is-attributed-to-patents" class="slide level2 center">
+<h2>Jiangsu’s +72% GDP premium is attributed to patents</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_waterfall_median_nuis_gdp.png" class="r-stretch quarto-figure-center"><p class="caption">GDP-nuisance RF: 17-year-average waterfalls for the five median provinces.</p><p><span class="takeaway fragment">Rich and poor median provinces differ in the forest’s GDP mainly through patent intensity.</span></p>
+<aside class="notes">
+<p>Jiangsu: 10.377 → 10.918 log units (32,120 → 55,150 yuan, +0.54 log points): invention +0.108, utility +0.105, design patents +0.071. Yunnan: 10.377 → 9.997 (−32%): patents −0.19 of the −0.38 log-point gap, higher-education shares −0.09.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="gdp-proxies-trend-within-provinces-pm2.5-predictors-mark-provinces" class="slide level2 center">
+<h2>GDP proxies trend within provinces; PM2.5 predictors mark provinces</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_dependence_nuis_gdp.png"></p>
+<figcaption>Patents → GDP: one continuous S-curve across quintiles.</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_dependence_nuis_outcome.png"></p>
+<figcaption>Water supply → PM2.5: a province-cluster step.</figcaption>
+</figure>
+</div>
+</div></div>
+<p><span class="takeaway fragment">Patents vary within provinces over time (42% between-province). Water supply is 98% between-province, so it acts as a province marker, not a mechanism.</span></p>
+<aside class="notes">
+<p>Patents: attributions from −0.23 log points (−21% GDP) to +0.22 (+24%); quintile ranges overlap heavily (medians −0.32 to 2.28) and only Q5 is shifted to the upper half. Water supply: large positive attributions (up to +0.15) switch on below about −3.6 in ln_watsup_pc; six northern provinces (Beijing, Tianjin, Shandong, Shanxi, Henan, Shaanxi) supply 100 of the 109 province-years above +0.05. Gaps in the quintile LOWESS lines mark stretches with no data.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-pm2.5-forest-without-gdp-looks-the-same" class="slide level2 center">
+<h2>A PM2.5 forest without GDP looks the same</h2>
+
+<img data-src="../figures/c30-shap-dml-forest-pm25/c30_shap_dml_forest_pm25_global_nuis_outcome.png" class="r-stretch quarto-figure-center"><p class="caption">Outcome-nuisance RF (no GDP): global mean |SHAP| and beeswarm — the same top six features, in the same order, as the shape RF.</p><p><span class="takeaway fragment">GDP’s leading proxies are mostly not PM2.5 predictors (<span class="math inline">\(\rho = -0.41\)</span>, no shared top-5). Dropping GDP leaves the fit essentially unchanged.</span></p>
+<aside class="notes">
+<p>Out-of-bag R² 0.8127 without GDP vs 0.8116 with it (500 vs 1,000 trees, so a similarity check, not a clean drop-one test). Spearman ρ between the GDP-nuisance and outcome-nuisance control rankings −0.41 (−0.49 against the shape RF); utility and invention patents rank 19–23 in the PM2.5 forests, although driver share ranks 8th. Consistent with c22’s over-control reading: GDP’s variation is absorbed by trend-heavy innovation and motorisation indicators — SHAP cannot show whether they are mediators, trend proxies or causes of growth.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-strongest-objection-and-the-answer" class="slide level2 center">
+<h2>The strongest objection — and the answer</h2>
+<p><span class="objection">Objection.</span> GDP looks peripheral only because its correlates (patents, vehicles, water, province identity) soak up its credit. SHAP cannot say that GDP does not matter.</p>
+<div class="fragment">
+<p><span class="rebuttal">Response.</span> Agreed: these are <strong>attributions of the fitted forest, not effects</strong>, and the FE blocks are lower bounds. What SHAP does establish holds up:</p>
+<ul>
+<li>the global ranking is robust to the explainer (<span class="math inline">\(\rho \approx 0.99\)</span>) and the seed (<span class="math inline">\(\rho \geq 0.976\)</span>)</li>
+<li>GDP’s leading proxies (patents) rank near the bottom of the PM2.5 forest</li>
+<li>the shape verdict (no inverted-N) matches BMA, DSL, PDP and ALE</li>
+</ul>
+<p><span class="takeaway fragment">SHAP cannot price GDP’s causal effect. It does show where the forest routes PM2.5 prediction, and that route bends nowhere.</span></p>
+<aside class="notes">
+<p>Interventional SHAP evaluates off-manifold combinations across blocks (one province’s dummy with another’s water supply). A causal reading would need conditional ignorability of GDP given non-mediating controls, which neither c22 nor c30 tests. With income and time given equal flexibility (16 df each), income bins explain SHAP(ln_gdppc) better than year dummies (R² 0.71 vs 0.52), though most explained variation is shared.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="across-forests-explainers-and-income-groups-gdp-stays-peripheral" class="slide level2 center" data-background-color="#2874A6">
+<h2>Across forests, explainers and income groups, GDP stays peripheral</h2>
+<p><span class="bignum">1.1%</span></p>
+<p><span class="bignum-label">GDP’s share of the PM2.5 forest’s attribution: rank 19 of 23 overall, 18–21 in every income quintile, and no inverted-N signature in any of the 6 subsets</span></p>
+</section></section>
+<section id="in-the-fitted-forests-pm2.5-runs-through-structure-and-place-gdp-stays-peripheral-and-never-bends-into-an-inverted-n." class="title-slide slide level1 divider center" data-background-color="#D55E00">
+<h1>In the fitted forests, PM2.5 runs through structure and place; GDP stays peripheral and never bends into an inverted-N.</h1>
+<p><span class="act">Next: SO₂ · COD · NH₃-N outcomes · 2SLS-BMA endogeneity · spatial models</span></p>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="slides_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="slides_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
